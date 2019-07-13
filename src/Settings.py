@@ -1,6 +1,16 @@
 ##!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#Packages
+import socket
+import time
+import sys
+import os
+import threading
+from datetime import datetime
+
+import logging as log
+
 class Settings:
     def __init__(self, filename):
         self.__INTERVAL = "Interval"
@@ -17,8 +27,8 @@ class Settings:
         for line in lines:
             tt = 0
             temp = setting_name in tempList
-            print('line={}'.format(line))
-            print('setting_name in line={}'.format(temp))
+            log.LogPrint('line={}'.format(line))
+            log.LogPrint('setting_name in line={}'.format(temp))
             if temp:
                 while(line[tt] != '='):
                     tt+=1
@@ -30,8 +40,8 @@ class Settings:
     def __get_setting_var(self, lines, setting_name):
         temp_list = []
         setting_line, setting_pos = self.__get_pos_setting(lines, setting_name)
-        print('setting_line={}'.format(setting_line))
-        print('setting_pos={}'.format(setting_pos))
+        log.LogPrint('setting_line={}'.format(setting_line))
+        log.LogPrint('setting_pos={}'.format(setting_pos))
         if setting_line != 0 and setting_pos != 0:
             return 0
         line = lines[setting_line]
@@ -47,7 +57,6 @@ class Settings:
     def __get_setting(self, setting_name):
         with open(self.__filename, 'r', encoding='utf-8') as file:
             lines = file.readlines()
-            print(lines)
         return(self.__get_setting_var(lines, setting_name))
 
     def __get_interval(self):
@@ -55,7 +64,7 @@ class Settings:
         return self.__get_setting(setting_name)
     
     def load_settings(self):
-        print('Setting filename:{}'.format(self.__filename))
+        log.LogPrint('Setting filename:{}'.format(self.__filename))
         self.Interval = self.__get_interval()
         return 1
 
@@ -65,4 +74,4 @@ def test():
     settings = Settings(settings_file)
     print(settings.load_settings())
 
-#---END---
+#---END---#

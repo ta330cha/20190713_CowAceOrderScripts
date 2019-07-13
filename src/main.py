@@ -9,31 +9,31 @@ import os
 import threading
 from datetime import datetime
 
-#from logging import logging as log
+import logging as log
 
 #Threads
-from ThreadTimer import ThreadTimer
+from thTimer import thTimer
 
 #Libraries
 import Settings
 
-#Load files
-SETTING_FILE = "src/settings.ini"
+#Interval Setting
+INTERVAL_SETTING_FILE = "src/Settings/settings.ini"
 
 def main():
-    print('Working at:{}'.format(os.getcwd()))
-    settings = Settings.Settings(SETTING_FILE)
+    log.LogPrint('Working at:{}'.format(os.getcwd()))
+    settings = Settings.Settings(INTERVAL_SETTING_FILE)
     settings.load_settings()
     interval = settings.Interval
     
-    threadTimer = ThreadTimer(interval)
+    threadTimer = thTimer(interval)
     threadTimer.Start()
     
     while(True):
-        print('Watching Thread:{}'.format(str(threading.activeCount())))
-        time.sleep(10)
+        log.LogPrint('Watching Thread:{}'.format(str(threading.activeCount())))
+        time.sleep(60)
 
 if __name__ == '__main__':
     main()
 
-#---END---
+#---END---#
